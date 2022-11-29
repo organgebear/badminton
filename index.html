@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" type="text/css" href="css/media.css" />
 		<!-- 引入js -->
+		<script src="js/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<title>羽毛球计分器</title>
 	</head>
 	<body>
@@ -22,27 +23,56 @@
 					<div class="col-xl-5 col-md-5 col-sm-12">
 						<div class="red card ">
 							<span class="porint">10</span>
+							<div class="button-mark">
+								<div class="button-mark-left"></div>
+								<div class="button-mark-right"></div>
+							</div>
 						</div>
 					</div>
 					<div class="col-xl-1 col-md-1 col-sm-1 col-6">
 						<div class="red-pro red">
 							<span class="porint">1</span>
+							<div class="button-mark">
+								<div class="button-mark-left"></div>
+								<div class="button-mark-right"></div>
+							</div>
 						</div>
 					</div>
 					<div class="col-xl-1 col-md-1 col-sm-1 col-6">
 						<div class="blue-pro blue">
 							<span class="porint">0</span>
+							<div class="button-mark">
+								<div class="button-mark-left"></div>
+								<div class="button-mark-right"></div>
+							</div>
 						</div>
 					</div>
 					<div class="col-xl-5 col-md-5 col-sm-12">
 						<div class="blue card">
 							<span class="porint">15</span>
+							<div class="button-mark">
+								<div class="button-mark-left"></div>
+								<div class="button-mark-right"></div>
+							</div>
 						</div>
+
 					</div>
 
 				</div>
 			</div>
 		</div>
 		<!-- 主要内容板块 end -->
+		<script type="text/javascript">
+			$(".button-mark-left").click(function() {
+				// console.log(this);
+				$(this).parents('.button-mark').siblings('.porint').text($(this).parents('.button-mark').siblings('.porint').text()*1+1)
+				// console.log($(this).parents('.button-mark').siblings('.porint'));
+			})
+			$(".button-mark-right").click(function() {
+				// console.log(this);
+				$(this).parents('.button-mark').siblings('.porint').text($(this).parents('.button-mark').siblings('.porint').text()*1-1)
+				// console.log($(this).parents('.button-mark').siblings('.porint'));
+			})
+		</script>
 	</body>
 </html>
