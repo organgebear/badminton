@@ -1,0 +1,14 @@
+/* 媒体查询样式 */
+@media only screen and (min-width:480px) {
+	.porint {
+		padding: 0px 10px;
+	}
+	
+}
+
+@media only screen and (min-width:768px) {
+	
+}
+
+@media only screen and (min-width:1330px) {}
+
