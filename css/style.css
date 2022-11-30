@@ -1,5 +1,9 @@
 body {
 	background-color: #e7e7f1;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .counter-title {
@@ -76,4 +80,37 @@ body {
 	height: 100%;
 	/* background-color: #fff; */
 	cursor: pointer;
+}
+
+/* 重置分数 */
+.porint-reset {
+	background-color: #a5a51a;
+	color: #fff;
+	border-radius: 10px;
+	padding: 10px;
+	text-align: center;
+	margin: 10px 0px;
+	cursor: pointer;
+}
+
+.btn-scale{
+	animation: btn-scale .5s ease-in-out;
+}
+
+@keyframes btn-scale {
+	0% {
+		transform: scale(.8);
+	}
+
+	50% {
+		transform: scale(1);
+	}
+
+	75% {
+		transform: scale(.9);
+	}
+
+	100% {
+		transform: scale(1);
+	}
 }
