@@ -83,7 +83,8 @@ body {
 }
 
 /* 重置分数 */
-.porint-reset {
+.porint-reset,
+.porint-check {
 	background-color: #a5a51a;
 	color: #fff;
 	border-radius: 10px;
@@ -93,7 +94,7 @@ body {
 	cursor: pointer;
 }
 
-.btn-scale{
+.btn-scale {
 	animation: btn-scale .5s ease-in-out;
 }
 
