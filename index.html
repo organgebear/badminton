@@ -22,7 +22,7 @@
 				<div class="row">
 					<div class="col-xl-5 col-md-4 col-sm-12">
 						<div class="red card  ">
-							<span class="porint left-point">0</span>
+							<span class="porint left-point">18</span>
 							<div class="button-mark">
 								<div class="button-mark-left"></div>
 								<div class="button-mark-right"></div>
@@ -43,7 +43,7 @@
 					</div>
 					<div class="col-xl-5 col-md-4 col-sm-12">
 						<div class="blue card ">
-							<span class="porint right-point">0</span>
+							<span class="porint right-point">18</span>
 							<div class="button-mark">
 								<div class="button-mark-left"></div>
 								<div class="button-mark-right"></div>
@@ -71,37 +71,56 @@
 			$(".button-mark-right").click(function() {
 				let grade = $(this).parents('.button-mark').siblings('.porint').text() * 1
 
-				if (grade !== 30) {
-					if (grade == 21) {
-						// 获取左右比分进行比较
-						let leftPoint = $(".left-point").text() * 1
-						let rightPoint = $(".right-point").text() * 1
+				var leftPoint = $(".left-point").text() * 1
+				var rightPoint = $(".right-point").text() * 1
 
-						if (leftPoint == 21 && rightPoint == 21) {
-							console.log('21了');
-							// $(this).parents('.button-mark').siblings('.porint').text(grade + 1)
-							// scaleAnmate($(this).parents('.button-mark').siblings('.porint'))
-							// console.log('双方21分');
-						} else {
-							if (leftPoint == 21) {
-								$(".left-point").text(0)
-								$(".red-pro").text($(".red-pro").text() * 1 + 1)
-							}
-							if (rightPoint == 21) {
-								$(".blue-pro").text($(".blue-pro").text() * 1 + 1)
-							}
+				if (leftPoint !== 30 && rightPoint !== 30) {
+					$(this).parents('.button-mark').siblings('.porint').text(grade + 1)
+					scaleAnmate($(this).parents('.button-mark').siblings('.porint'))
+					// 获取红色蓝色两边的分数
+					leftPoint = $(".left-point").text() * 1
+					rightPoint = $(".right-point").text() * 1
+
+					if (rightPoint > 20 && leftPoint > 20) {
+						if (leftPoint - rightPoint == 2) {
+							console.log('红色胜利了');
+							$(".red-pro").text($(".red-pro").text() * 1 + 1)
+						}
+						if (rightPoint - leftPoint == 2) {
+							console.log('蓝色胜利了');
+							$(".blue-pro").text($(".red-pro").text() * 1 + 1)
 						}
 					} else {
-						$(this).parents('.button-mark').siblings('.porint').text(grade + 1)
-						scaleAnmate($(this).parents('.button-mark').siblings('.porint'))
+						// console.log(hasPoint(leftPoint,rightPoint));
+						switch (hasPoint(leftPoint, rightPoint)) {
+							case "left":
+								console.log('红色胜利了');
+								$(".red-pro").text($(".red-pro").text() * 1 + 1)
+								break;
+							case "right":
+								console.log('蓝色胜利了');
+								$(".blue-pro").text($(".red-pro").text() * 1 + 1)
+								break;
+						}
 					}
 				}
 			})
+
+			function hasPoint(leftPoint, rightPoint) {
+				var winName = ''
+				if (leftPoint == 21 && rightPoint !== 20) {
+					winName = 'left'
+				}
+				if (rightPoint == 21 && leftPoint !== 20) {
+					winName = 'right'
+				}
+				return winName
+			}
 			$(".porint-reset").click(function() {
 				scaleAnmate($(this))
 				$(".card .porint").text(0)
 			})
-			$(".porint-check").click(function () {
+			$(".porint-check").click(function() {
 				scaleAnmate($(this))
 			})
 
