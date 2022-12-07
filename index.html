@@ -17,7 +17,7 @@
 	<body>
 		<!-- 主要内容板块 -->
 		<div class="counter">
-			<div class="counter-title">羽毛球计分器</div>
+			<div class="counter-title">🏸羽毛球计分器</div>
 			<div class="race-counter">第<span class="counter-race">1</span>局比赛</div>
 			<div class="container">
 				<div class="row">
@@ -79,6 +79,7 @@
 						</div>
 					</li> -->
 				</ul>
+				
 				<div class="tip">提示语：双方交换场地但是不交换红色和蓝色板块</div>
 			</div>
 		</div>
@@ -220,7 +221,7 @@
 					.getSeconds()
 				let muban = `<li>
 						<div class="race-count">第<span class="count">${count}</span>局</div>
-						<div class="timer">${addTime}</div>
+						<!-- <div class="timer">${addTime}</div> -->
 						<div class="result">
 							<div class="red">${red}</div>
 							<div class="fenge">VS</div>
@@ -234,7 +235,7 @@
 				$(".getTip-content").css('top', '0%')
 				$(".getTip-content").text(text)
 				setTimeout(function() {
-					$(".getTip-content").css('top', '-10%').text(text)
+					$(".getTip-content").css('top', '-20%').text(text)
 				}, 2000)
 			}
 
@@ -255,6 +256,7 @@
 				localStorage.setItem('leftPoint', 0)
 				localStorage.setItem('rightPoint', 0)
 				$(".card .porint").text(0)
+				getTip('已经重置分数了')
 			})
 			$(".porint-check").click(function() {
 				scaleAnmate($(this))
