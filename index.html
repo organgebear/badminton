@@ -136,7 +136,7 @@
 					rightPoint = $(".right-point").text() * 1
 					// localStorage.setItem('rightPoint', rightPoint)
 
-					if (rightPoint > 20 && leftPoint > 20) {
+					if (rightPoint >= 20 && leftPoint >=20) {
 						if (leftPoint - rightPoint == 2) {
 							console.log('红色胜利了');
 							getTip('第' + nowRace + '局' + '红色胜利了')
@@ -191,7 +191,30 @@
 								break;
 						}
 					}
+				} 
+				if (leftPoint ==30) {
+					getTip('第' + nowRace + '局' + '红色胜利了')
+					$(".red-pro").text($(".red-pro").text() * 1 + 1)
+					$(".porint").text(0)
+					// 增加比赛记录
+					$(".news").text($(".news").text() * 1 + 1)
+					scaleAnmate($(".news"))
+					addRace(leftPoint, rightPoint, raceCount)
+					raceCount++
+					$(".counter-race").text(raceCount)
 				}
+				if (rightPoint ==30) {
+					getTip('第' + nowRace + '局' + '蓝色胜利了')
+					$(".blue-pro").text($(".blue-pro").text() * 1 + 1)
+					$(".porint").text(0)
+					// 增加比赛记录
+					$(".news").text($(".news").text() * 1 + 1)
+					scaleAnmate($(".news"))
+					addRace(leftPoint, rightPoint, raceCount)
+					raceCount++
+					$(".counter-race").text(raceCount)
+				}
+				
 				// 双方1比1的时候提示交换场地
 				let red = $(".red-pro ").text() * 1
 				let blue = $(".blue-pro ").text() * 1
