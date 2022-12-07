@@ -18,11 +18,13 @@
 		<!-- 主要内容板块 -->
 		<div class="counter">
 			<div class="counter-title">羽毛球计分器</div>
+			<div class="race-counter">第<span class="counter-race">1</span>局比赛</div>
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-5 col-md-4 col-sm-12">
 						<div class="red card  ">
 							<span class="porint left-point">18</span>
+							<!-- <span class="porint left-point">0</span> -->
 							<div class="button-mark">
 								<div class="button-mark-left"></div>
 								<div class="button-mark-right"></div>
@@ -39,11 +41,12 @@
 						<div class="blue-pro blue">
 							<span class="porint">0</span>
 						</div>
-						<div class="porint-check">查看比赛记录</div>
+						<div class="porint-check">查看比赛记录 <span class="news">0</span></div>
 					</div>
 					<div class="col-xl-5 col-md-4 col-sm-12">
 						<div class="blue card ">
 							<span class="porint right-point">18</span>
+							<!-- <span class="porint right-point">0</span> -->
 							<div class="button-mark">
 								<div class="button-mark-left"></div>
 								<div class="button-mark-right"></div>
@@ -51,12 +54,47 @@
 						</div>
 
 					</div>
-
 				</div>
 			</div>
 		</div>
+		<div class="dialog">
+			<div class="title">比赛记录</div>
+			<div class="dialog-content">
+				<ul class="race-list">
+				<!-- 	<li>
+						<div class="race-count">第<span class="count">1</span>局</div>
+						<div class="timer">2022/12/7 12:0:0</div>
+						<div class="result">
+							<div class="red">21</div>
+							<div class="fenge">VS</div>
+							<div class="blue">21</div>
+						</div>
+					</li>
+					<li>
+						<div class="race-count">第<span class="count">1</span>局</div>
+						<div class="result">
+							<div class="red">21</div>
+							<div class="fenge">VS</div>
+							<div class="blue">21</div>
+						</div>
+					</li> -->
+				</ul>
+				<div class="tip">提示语：双方交换场地但是不交换红色和蓝色板块</div>
+			</div>
+		</div>
+		<div class="dialog-mark"></div>
+		<div class="getTip-content">
+			我是提示语
+		</div>
+		
 		<!-- 主要内容板块 end -->
 		<script type="text/javascript">
+			$(".dialog-mark").click(function() {
+				$(".dialog ,.dialog-mark").fadeOut()
+			})
+			$(".porint-check").click(function() {
+				$(".dialog ,.dialog-mark").fadeIn()
+			})
 			$(".button-mark-left").click(function() {
 				// console.log(this);
 				let grade = $(this).parents('.button-mark').siblings('.porint').text() * 1
@@ -67,44 +105,136 @@
 				}
 				// console.log($(this).parents('.button-mark').siblings('.porint'));
 			})
-			let pointFlag = false
+			let pointFlag = true
+			// console.log(localStorage.getItem('leftPoint'));
+			if (localStorage.getItem('leftPoint') !== null) {
+				console.log('有分数');
+				$(".left-point").text(localStorage.getItem('leftPoint'))
+				$(".right-point").text(localStorage.getItem('rightPoint'))
+			} else {
+				// console.log('没有分数');
+			}
+			// 定义交换场地变量
+			var reverseFlag = true;
+			// 定义比赛结束变量
+			var raceEndFlag = true;
+			// 定义比赛局数变量
+			var raceCount =1
 			$(".button-mark-right").click(function() {
 				let grade = $(this).parents('.button-mark').siblings('.porint').text() * 1
-
 				var leftPoint = $(".left-point").text() * 1
 				var rightPoint = $(".right-point").text() * 1
-
+				// 定义当前局
+				let nowRace = $(".news").text() * 1 + 1
 				if (leftPoint !== 30 && rightPoint !== 30) {
 					$(this).parents('.button-mark').siblings('.porint').text(grade + 1)
 					scaleAnmate($(this).parents('.button-mark').siblings('.porint'))
 					// 获取红色蓝色两边的分数
 					leftPoint = $(".left-point").text() * 1
+					// localStorage.setItem('leftPoint', leftPoint)
 					rightPoint = $(".right-point").text() * 1
+					// localStorage.setItem('rightPoint', rightPoint)
 
 					if (rightPoint > 20 && leftPoint > 20) {
 						if (leftPoint - rightPoint == 2) {
 							console.log('红色胜利了');
+							getTip('第' + nowRace + '局' + '红色胜利了')
 							$(".red-pro").text($(".red-pro").text() * 1 + 1)
+							$(".porint").text(0)
+							// 增加比赛记录
+							$(".news").text($(".news").text() * 1 + 1)
+							scaleAnmate($(".news"))
+							addRace(leftPoint, rightPoint,raceCount)
+							raceCount++
 						}
 						if (rightPoint - leftPoint == 2) {
 							console.log('蓝色胜利了');
-							$(".blue-pro").text($(".red-pro").text() * 1 + 1)
+							getTip('第' + nowRace + '局' + '蓝色胜利了')
+							$(".blue-pro").text($(".blue-pro").text() * 1 + 1)
+							$(".porint").text(0)
+							// 增加比赛记录
+							$(".news").text($(".news").text() * 1 + 1)
+							scaleAnmate($(".news"))
+							addRace(leftPoint, rightPoint,raceCount)
+							raceCount++
 						}
 					} else {
 						// console.log(hasPoint(leftPoint,rightPoint));
 						switch (hasPoint(leftPoint, rightPoint)) {
 							case "left":
 								console.log('红色胜利了');
+
+								getTip('第' + nowRace + '局' + '红色胜利了')
 								$(".red-pro").text($(".red-pro").text() * 1 + 1)
+								$(".porint").text(0)
+								// 增加比赛记录
+								$(".news").text($(".news").text() * 1 + 1)
+								scaleAnmate($(".news"))
+								addRace(leftPoint, rightPoint,raceCount)
+								raceCount++
 								break;
 							case "right":
 								console.log('蓝色胜利了');
-								$(".blue-pro").text($(".red-pro").text() * 1 + 1)
+								getTip('第' + nowRace + '局' + '蓝色胜利了')
+								$(".blue-pro").text($(".blue-pro").text() * 1 + 1)
+								$(".porint").text(0)
+								// 增加比赛记录
+								$(".news").text($(".news").text() * 1 + 1)
+								scaleAnmate($(".news"))
+								addRace(leftPoint, rightPoint,raceCount)
+								raceCount++
 								break;
 						}
 					}
 				}
+				// 双方1比1的时候提示交换场地
+				let red = $(".red-pro ").text() * 1
+				let blue = $(".blue-pro ").text() * 1
+				if (reverseFlag) {
+					if (red == 1 && blue == 1) {
+						// console.log('交换场地');
+						getTip('交换场地')
+						reverseFlag = false
+					}
+				}
+				if (raceEndFlag) {
+					if (red == 2) {
+						getTip('红色胜利✌')
+						$(".dialog ,.dialog-mark").fadeIn()
+					}
+					if (blue == 2) {
+						getTip('蓝色胜利✌')
+						$(".dialog ,.dialog-mark").fadeIn()
+					}
+				}
+
 			})
+			// 添加比赛记录函数
+			function addRace(red, blue,count) {
+				let addTime = new Date
+				addTime = addTime.toLocaleDateString() + ' ' + addTime.getHours() + ':' + addTime.getMinutes() + ':' + addTime
+					.getSeconds()
+				let muban = `<li>
+						<div class="race-count">第<span class="count">${count}</span>局</div>
+						<div class="timer">${addTime}</div>
+						<div class="result">
+							<div class="red">${red}</div>
+							<div class="fenge">VS</div>
+							<div class="blue">${blue}</div>
+						</div>
+					</li>`
+					$(".race-list").append(muban)
+				
+			}
+			// 提示框
+			function getTip(text) {
+				$(".getTip-content").css('top', '0%')
+				$(".getTip-content").text(text)
+				setTimeout(function() {
+					$(".getTip-content").css('top', '-10%').text(text)
+				}, 2000)
+			}
+
 
 			function hasPoint(leftPoint, rightPoint) {
 				var winName = ''
@@ -116,8 +246,11 @@
 				}
 				return winName
 			}
+
 			$(".porint-reset").click(function() {
 				scaleAnmate($(this))
+				localStorage.setItem('leftPoint', 0)
+				localStorage.setItem('rightPoint', 0)
 				$(".card .porint").text(0)
 			})
 			$(".porint-check").click(function() {
