@@ -12,6 +12,9 @@
 		<link rel="stylesheet" type="text/css" href="css/media.css" />
 		<!-- 引入js -->
 		<script src="js/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 引入图标 -->
+		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 		<title>羽毛球计分器</title>
 	</head>
 	<body>
@@ -26,8 +29,10 @@
 							<!-- <span class="porint left-point">18</span> -->
 							<span class="porint left-point">0</span>
 							<div class="button-mark">
-								<div class="button-mark-left"></div>
-								<div class="button-mark-right"></div>
+								<div class="button-mark-left">
+									<ion-icon name="chevron-back-outline" class="icon-left"></ion-icon></div>
+								<div class="button-mark-right">
+									<ion-icon name="chevron-forward-outline" class="icon-right"></ion-icon></div>
 							</div>
 						</div>
 					</div>
@@ -48,8 +53,12 @@
 							<!-- <span class="porint right-point">18</span> -->
 							<span class="porint right-point">0</span>
 							<div class="button-mark">
-								<div class="button-mark-left"></div>
-								<div class="button-mark-right"></div>
+								<div class="button-mark-left">
+									<ion-icon name="chevron-back-outline" class="icon-left"></ion-icon>
+								</div>
+								<div class="button-mark-right">
+									<ion-icon name="chevron-forward-outline" class="icon-right"></ion-icon>
+								</div>
 							</div>
 						</div>
 
@@ -79,14 +88,22 @@
 						</div>
 					</li> -->
 				</ul>
-				
-				<div class="tip">提示语：双方交换场地但是不交换红色和蓝色板块</div>
+
+				<div class="tip">
+					<p>提示语：双方交换场地但是不交换红色和蓝色板块</p>
+					<p>提示语：单击黑色区域开始下一局</p>
+				</div>
 			</div>
 		</div>
 		<div class="dialog-mark"></div>
 		<div class="getTip-content">
 			我是提示语
 		</div>
+		<!-- 提醒开始比赛 -->
+		<div class="start">
+			<div class="start-race"></div>
+		</div>
+		<!-- 提醒开始比赛 end -->
 		<!-- 主要内容板块 end -->
 		<script type="text/javascript">
 			$(".dialog-mark").click(function() {
@@ -135,7 +152,7 @@
 					rightPoint = $(".right-point").text() * 1
 					// localStorage.setItem('rightPoint', rightPoint)
 
-					if (rightPoint >= 20 && leftPoint >=20) {
+					if (rightPoint >= 20 && leftPoint >= 20) {
 						if (leftPoint - rightPoint == 2) {
 							console.log('红色胜利了');
 							getTip('第' + nowRace + '局' + '红色胜利了')
@@ -158,7 +175,7 @@
 							scaleAnmate($(".news"))
 							addRace(leftPoint, rightPoint, raceCount)
 							raceCount++
-						$(".counter-race").text(raceCount)
+							$(".counter-race").text(raceCount)
 						}
 					} else {
 						// console.log(hasPoint(leftPoint,rightPoint));
@@ -190,8 +207,8 @@
 								break;
 						}
 					}
-				} 
-				if (leftPoint ==30) {
+				}
+				if (leftPoint == 30) {
 					getTip('第' + nowRace + '局' + '红色胜利了')
 					$(".red-pro").text($(".red-pro").text() * 1 + 1)
 					$(".porint").text(0)
@@ -202,7 +219,7 @@
 					raceCount++
 					$(".counter-race").text(raceCount)
 				}
-				if (rightPoint ==30) {
+				if (rightPoint == 30) {
 					getTip('第' + nowRace + '局' + '蓝色胜利了')
 					$(".blue-pro").text($(".blue-pro").text() * 1 + 1)
 					$(".porint").text(0)
@@ -213,7 +230,7 @@
 					raceCount++
 					$(".counter-race").text(raceCount)
 				}
-				
+
 				// 双方1比1的时候提示交换场地
 				let red = $(".red-pro ").text() * 1
 				let blue = $(".blue-pro ").text() * 1
@@ -228,14 +245,14 @@
 					if (red == 2) {
 						getTip('红色胜利✌')
 						$(".dialog ,.dialog-mark").fadeIn()
-						raceCount=1
+						raceCount = 1
 						$(".counter-race ").text(raceCount)
 						$(".red-pro,.blue-pro").text(0)
 					}
 					if (blue == 2) {
 						getTip('蓝色胜利✌')
 						$(".dialog ,.dialog-mark").fadeIn()
-						raceCount=1
+						raceCount = 1
 						$(".counter-race ").text(raceCount)
 						$(".red-pro,.blue-pro").text(0)
 					}
