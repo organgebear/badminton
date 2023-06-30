@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>羽毛球计分器</title>
+	</head>
+	<body>
+		<!-- header -->
+		<header>
+
+		</header>
+		<!-- header end -->
+		<!-- main -->
+		<main>
+			<div id="player-left" class="player" point='0'>
+				<h3>player-left分数: </h3>
+				<span class="point">19</span>
+				<button type="button" class="add btn1">增加</button>
+				<button type="button" class="reduce">减少</button>
+			</div>
+			<div id="player-right" class="player" point='0'>
+				<h3>player-right分数:</h3>
+				<span class="point">19</span>
+				<button type="button" class="add">增加</button>
+				<button type="button" class="reduce">减少</button>
+			</div>
+		</main>
+		<!-- main end -->
+		<!-- footer -->
+		<footer>
+
+		</footer>
+		<!-- footer end-->
+		<script type="text/javascript">
+			// 获取运动员数组 
+			let playerArray = document.getElementsByClassName('player'); //并不是一个数组是一个对象
+			// 把playerArray伪数组转换为真数组
+			playerArray = Array.from(playerArray);
+			// 获取页面当中的两个运动员
+			const PLAYER_LEFT = document.getElementById('player-left');
+			const PLAYER_RIGHT = document.getElementById('player-right');
+			// 测试输出
+			// console.log(PLAYER_LEFT);
+			// console.log(PLAYER_RIGHT);
+			// 给按钮注册事件
+			playerArray.forEach(function(v, i) {
+				// console.dir(v);
+				// 给.player的类挂载事件，元素冒泡之后判断增加还是减少
+				v.addEventListener('click', function(e) {
+					// 获取当前点击的元素
+					let clickElement = e.toElement;
+					if (Array.from(clickElement.classList).includes("add") || Array.from(clickElement.classList)
+						.includes("reduce")) {
+						// 获取player元素下的分数元素，然后增加或者减少分数
+						let pointContiner = clickElement.parentNode.children
+						Array.from(pointContiner).forEach(function(v, i) {
+							if (Array.from(v.classList).includes('point')) pointContiner = v;
+						})
+						//获取当前分数
+						let pointNow = pointContiner.innerText
+						// 判断元素是否含有.add这个类，如果有就增加，没有就减少
+						// 并且附带条件 最低0分 最高30分
+						if (Array.from(clickElement.classList).includes("add") && pointNow != 30) {
+							// console.log('增加');
+							pointContiner.innerText = pointNow * 1 + 1
+							clickElement.parentNode.setAttribute('point', pointNow * 1 + 1)
+						} else if (Array.from(clickElement.classList).includes("reduce") && pointNow != 0) {
+							// console.log('减少');
+							pointContiner.innerText = pointNow * 1 - 1
+							clickElement.parentNode.setAttribute('point', pointNow * 1 - 1)
+						}
+						// 判断胜利者
+						judgeVictor()
+					}
+
+				})
+			})
+			// 判断胜利者
+			function judgeVictor() {
+				let playerLeftPoint = PLAYER_LEFT.getAttribute('point') * 1
+				let playerRightPoint = PLAYER_RIGHT.getAttribute('point') * 1
+				// console.log(playerLeftPoint);
+
+				/* 
+					胜利条件：
+					1.当任意一方的分数 等于21分并且另外一方不等于21分时 21方胜利
+					2.双方同时为20分的时候，必须大于对方两分,30分封顶
+					
+					加赛：任意方分数超越对少两分为胜
+					不加赛 21分为胜
+					
+					playerLeftPoint 为left运动员的分数
+					playerRightPoint 为right运动员的分数
+				 */
+				// 判断是否加赛
+				let moreRaceFlag = false;
+				playerLeftPoint>=20&&playerRightPoint>=20?moreRaceFlag=true:moreRaceFlag=false;
+				// 判断胜者
+				if (moreRaceFlag) {
+					if (playerLeftPoint - playerRightPoint == 2 || playerLeftPoint == 30) {
+						console.log(PLAYER_LEFT, '胜利者');
+						return PLAYER_LEFT
+					}
+					if (playerRightPoint - playerLeftPoint == 2 || playerRightPoint == 30) {
+						console.log(PLAYER_RIGHT, '胜利者');
+						return PLAYER_RIGHT
+					}
+				} else {
+					if (playerLeftPoint == 21) {
+						console.log(PLAYER_LEFT, '胜利者');
+						return PLAYER_LEFT
+					}
+					if (playerRightPoint == 21) {
+						console.log(PLAYER_RIGHT, '胜利者');
+						return PLAYER_RIGHT
+					}
+				}
+				// if((playerLeftPoint==21&&moreRaceFlag==false)||(moreRaceFlag&&playerLeftPoint-playerRightPoint==2)){
+				// 	console.log(PLAYER_LEFT,'胜利者');
+				// 	return PLAYER_LEFT
+				// }
+				//  if((playerRightPoint==21&&moreRaceFlag==false)||(moreRaceFlag&&playerRightPoint-playerLeftPoint==2)) {
+				// 	console.log(PLAYER_RIGHT,'胜利者');
+				// 	return PLAYER_RIGHT
+				// }
+			}
+		</script>
+	</body>
+</html>
