@@ -14,13 +14,20 @@
 		<!-- header end -->
 		<!-- main -->
 		<main>
-			<div id="player-left" class="player" point='0'>
+			<h1>
+				<span class="play-left-name">张三</span>
+				和
+				<span class="play-right-name">王五</span>的
+				羽毛球比赛
+			
+			</h1>
+			<div id="PLAYER_LEFT" class="player " point='0'>
 				<h3>player-left分数: </h3>
 				<span class="point">19</span>
 				<button type="button" class="add btn1">增加</button>
 				<button type="button" class="reduce">减少</button>
 			</div>
-			<div id="player-right" class="player" point='0'>
+			<div id="PLAYER_LEFT" class="player" point='0'>
 				<h3>player-right分数:</h3>
 				<span class="point">19</span>
 				<button type="button" class="add">增加</button>
@@ -39,8 +46,10 @@
 			// 把playerArray伪数组转换为真数组
 			playerArray = Array.from(playerArray);
 			// 获取页面当中的两个运动员
-			const PLAYER_LEFT = document.getElementById('player-left');
-			const PLAYER_RIGHT = document.getElementById('player-right');
+			const PLAYER_LEFT = document.getElementById('PLAYER_LEFT');
+			const PLAYER_RIGHT = document.getElementById('PLAYER_LEFT');
+			// 定义当前多少局
+			let playCount =1;
 			// 测试输出
 			// console.log(PLAYER_LEFT);
 			// console.log(PLAYER_RIGHT);
@@ -50,7 +59,7 @@
 				// 给.player的类挂载事件，元素冒泡之后判断增加还是减少
 				v.addEventListener('click', function(e) {
 					// 获取当前点击的元素
-					let clickElement = e.toElement;
+					let clickElement = e.target;
 					if (Array.from(clickElement.classList).includes("add") || Array.from(clickElement.classList)
 						.includes("reduce")) {
 						// 获取player元素下的分数元素，然后增加或者减少分数
@@ -72,7 +81,8 @@
 							clickElement.parentNode.setAttribute('point', pointNow * 1 - 1)
 						}
 						// 判断胜利者
-						judgeVictor()
+						console.log(judgeVictor());
+						console.log(playCount);
 					}
 
 				})
@@ -81,11 +91,10 @@
 			function judgeVictor() {
 				let playerLeftPoint = PLAYER_LEFT.getAttribute('point') * 1
 				let playerRightPoint = PLAYER_RIGHT.getAttribute('point') * 1
-				// console.log(playerLeftPoint);
 
 				/* 
 					胜利条件：
-					1.当任意一方的分数 等于21分并且另外一方不等于21分时 21方胜利
+					1.当任意一方的分数 等于21分
 					2.双方同时为20分的时候，必须大于对方两分,30分封顶
 					
 					加赛：任意方分数超越对少两分为胜
@@ -94,6 +103,25 @@
 					playerLeftPoint 为left运动员的分数
 					playerRightPoint 为right运动员的分数
 				 */
+				// 判断方法1
+				let victor = null; //胜利者变量
+				if ((playerLeftPoint == 21 || playerRightPoint == 21) && !(playerRightPoint >= 20 && playerLeftPoint >=
+						20)) {
+					//上行代码意思 ：胜利者条件为 21分 并且不加赛的情况
+					//下方代码意思： 判断任意一方到达21分为胜者
+					playerLeftPoint == 21 ? victor = PLAYER_LEFT : 0;
+					playerRightPoint == 21 ? victor = PLAYER_RIGHT : 0;
+				} else if ((playerLeftPoint - playerRightPoint == 2 || playerRightPoint - playerLeftPoint == 2) && (
+						playerRightPoint >=
+						20 && playerLeftPoint >= 20)) {
+					//上行代码意思 ：双方20分过后即为加赛，必须超越对方两分才算胜利
+					//下方判断哪一方分数为大于对方两分
+					playerLeftPoint - playerRightPoint == 2 ? victor = PLAYER_LEFT : 0;
+					playerRightPoint - playerLeftPoint == 2 ? victor = PLAYER_RIGHT : 0;
+				}
+				return victor;
+				/* 
+				判断方法2
 				// 判断是否加赛
 				let moreRaceFlag = false;
 				playerLeftPoint>=20&&playerRightPoint>=20?moreRaceFlag=true:moreRaceFlag=false;
@@ -116,15 +144,9 @@
 						console.log(PLAYER_RIGHT, '胜利者');
 						return PLAYER_RIGHT
 					}
-				}
-				// if((playerLeftPoint==21&&moreRaceFlag==false)||(moreRaceFlag&&playerLeftPoint-playerRightPoint==2)){
-				// 	console.log(PLAYER_LEFT,'胜利者');
-				// 	return PLAYER_LEFT
-				// }
-				//  if((playerRightPoint==21&&moreRaceFlag==false)||(moreRaceFlag&&playerRightPoint-playerLeftPoint==2)) {
-				// 	console.log(PLAYER_RIGHT,'胜利者');
-				// 	return PLAYER_RIGHT
-				// }
+				} */
+				// 判断完需要每次谁得分了需要提示在卡片上，避免误触
+
 			}
 		</script>
 	</body>
